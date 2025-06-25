@@ -19,9 +19,9 @@ The configuration file contains a list of stages with optional parameters:
 ```json
 {
   "pipeline": [
-    {"module": "data_sentinel.modules.readers.RealTimeReader"},
+    {"module": "data_sentinel.modules.readers.realtime.RealTimeReader"},
     {
-      "module": "data_sentinel.modules.dq.DataQualityModule",
+      "module": "data_sentinel.modules.ops.dq.DataQualityModule",
       "enable_mlflow": true
     }
   ]
