@@ -2,11 +2,15 @@
   "pipeline": [
     {
       "module": "data_sentinel.modules.readers.RealTimeReader",
-      "config": {}
+      "config": {"records": [4, 5, 6]}
     },
     {
       "module": "data_sentinel.modules.dq.DataQualityModule",
-      "config": {}
+      "config": {"allow_empty": false}
+    },
+    {
+      "module": "data_sentinel.modules.readers.S3Reader",
+      "config": {"bucket": "my-bucket", "key": "path/to/key"}
     }
   ]
 }
