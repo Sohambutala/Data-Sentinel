@@ -1,18 +1,17 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List
-
 from pydantic import BaseModel, Field
-
+from typing import Any, Dict, List
 
 class StageConfig(BaseModel):
     """Configuration for a single pipeline stage."""
 
     module: str
     config: Dict[str, Any] = Field(default_factory=dict)
+    enable_mlflow: bool = False
 
 
 class PipelineConfig(BaseModel):
-    """Top level configuration schema."""
+    """Root pipeline configuration."""
 
     pipeline: List[StageConfig]

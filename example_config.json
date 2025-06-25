@@ -6,11 +6,8 @@
     },
     {
       "module": "data_sentinel.modules.dq.DataQualityModule",
-      "config": {"allow_empty": false}
-    },
-    {
-      "module": "data_sentinel.modules.readers.S3Reader",
-      "config": {"bucket": "my-bucket", "key": "path/to/key"}
+      "config": {},
+      "enable_mlflow": true
     }
   ]
 }
