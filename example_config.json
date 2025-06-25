@@ -8,5 +8,6 @@
       "module": "data_sentinel.modules.dq.DataQualityModule",
       "config": {}
     }
-  ]
+  ],
+  "enable_mlflow": false
 }

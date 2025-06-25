@@ -14,7 +14,8 @@ from .base import BaseModule
 class Orchestrator:
     """Pipeline orchestrator that loads and runs configured modules."""
 
-    def __init__(self, stages: Iterable[dict]):
+    def __init__(self, stages: Iterable[dict], use_mlflow: bool = False):
+        self.use_mlflow = use_mlflow
         self.stages: List[BaseModule] = []
         for stage_conf in stages:
             module_path = stage_conf["module"]
@@ -41,16 +42,18 @@ class Orchestrator:
 
         @flow(name="data_sentinel_pipeline")
         def pipeline() -> Any:
-            with mlflow.start_run():
-                data: Any = None
-                for t in tasks:
-                    data = t(data)
-                return data
+            data: Any = None
+            for t in tasks:
+                data = t(data)
+            return data
 
+        if self.use_mlflow:
+            with mlflow.start_run():
+                return pipeline()
         return pipeline()
 
 
-def load_config(path: str | Path) -> list[dict]:
+def load_config(path: str | Path) -> dict:
     with open(path, "r", encoding="utf-8") as fh:
         cfg = json.load(fh)
-    return cfg.get("pipeline", [])
+    return cfg

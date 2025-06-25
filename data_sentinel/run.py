@@ -12,8 +12,10 @@ def main(argv: list[str] | None = None) -> None:
         print("Usage: python -m data_sentinel.run <config_file>")
         raise SystemExit(1)
     config_file = Path(argv[0])
-    stages = load_config(config_file)
-    orchestrator = Orchestrator(stages)
+    cfg = load_config(config_file)
+    stages = cfg.get("pipeline", [])
+    mlflow_enabled = cfg.get("enable_mlflow", False)
+    orchestrator = Orchestrator(stages, use_mlflow=mlflow_enabled)
     result = orchestrator.run()
     print(result)
 
