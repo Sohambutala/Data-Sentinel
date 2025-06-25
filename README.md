@@ -2,6 +2,7 @@
 
 Data-Sentinel provides a pluggable orchestration framework for building
 simple data workflows. The order of execution is defined in a JSON
+
 configuration file parsed via a **Pydantic** model. The orchestrator
 uses **Prefect** for task execution and individual tasks can opt in to
 **MLflow** tracking via their configuration.
@@ -12,7 +13,8 @@ uses **Prefect** for task execution and individual tasks can opt in to
 python -m data_sentinel.run example_config.json
 ```
 
-The configuration file might look like this:
+
+The configuration file contains a list of stages with optional parameters:
 
 ```json
 {

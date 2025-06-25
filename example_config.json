@@ -2,7 +2,7 @@
   "pipeline": [
     {
       "module": "data_sentinel.modules.readers.RealTimeReader",
-      "config": {}
+      "config": {"records": [4, 5, 6]}
     },
     {
       "module": "data_sentinel.modules.dq.DataQualityModule",

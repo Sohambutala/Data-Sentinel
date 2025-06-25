@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import importlib
-import json
 from pathlib import Path
 from typing import Any, Iterable, List, Tuple
 
 from prefect import flow, task
 import mlflow
+
+from .config import PipelineConfig, StageConfig
 
 from .base import BaseModule
 from .config import PipelineConfig, StageConfig
