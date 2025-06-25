@@ -5,6 +5,9 @@ import json
 from pathlib import Path
 from typing import Any, Iterable, List
 
+from prefect import flow, task
+import mlflow
+
 from .base import BaseModule
 
 
@@ -23,11 +26,28 @@ class Orchestrator:
                 raise TypeError(f"{module_path} is not a BaseModule")
             self.stages.append(cls(config))
 
-    def run(self) -> Any:
-        data: Any = None
+    def _build_tasks(self) -> list:
+        tasks = []
         for stage in self.stages:
-            data = stage.run(data)
-        return data
+            @task(name=stage.__class__.__name__)
+            def stage_task(data, _stage=stage):
+                return _stage.run(data)
+
+            tasks.append(stage_task)
+        return tasks
+
+    def run(self) -> Any:
+        tasks = self._build_tasks()
+
+        @flow(name="data_sentinel_pipeline")
+        def pipeline() -> Any:
+            with mlflow.start_run():
+                data: Any = None
+                for t in tasks:
+                    data = t(data)
+                return data
+
+        return pipeline()
 
 
 def load_config(path: str | Path) -> list[dict]:
