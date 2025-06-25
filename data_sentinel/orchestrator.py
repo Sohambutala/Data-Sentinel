@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import importlib
-import json
 from pathlib import Path
 from typing import Any, Iterable, List
+
+from .config import PipelineConfig, StageConfig
 
 from .base import BaseModule
 
@@ -11,11 +12,11 @@ from .base import BaseModule
 class Orchestrator:
     """Pipeline orchestrator that loads and runs configured modules."""
 
-    def __init__(self, stages: Iterable[dict]):
+    def __init__(self, stages: Iterable[StageConfig]):
         self.stages: List[BaseModule] = []
         for stage_conf in stages:
-            module_path = stage_conf["module"]
-            config = stage_conf.get("config", {})
+            module_path = stage_conf.module
+            config = stage_conf.config
             module_name, class_name = module_path.rsplit(".", 1)
             module = importlib.import_module(module_name)
             cls = getattr(module, class_name)
@@ -30,7 +31,7 @@ class Orchestrator:
         return data
 
 
-def load_config(path: str | Path) -> list[dict]:
-    with open(path, "r", encoding="utf-8") as fh:
-        cfg = json.load(fh)
-    return cfg.get("pipeline", [])
+def load_config(path: str | Path) -> list[StageConfig]:
+    """Load and validate configuration file."""
+    cfg = PipelineConfig.parse_file(path)
+    return cfg.pipeline

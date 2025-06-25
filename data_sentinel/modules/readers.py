@@ -5,7 +5,8 @@ class RealTimeReader(BaseModule):
     """Example real-time reader returning static data."""
 
     def run(self, data=None):
-        return {"records": [1, 2, 3]}
+        records = self.config.get("records", [1, 2, 3])
+        return {"records": records}
 
 
 class S3Reader(BaseModule):
