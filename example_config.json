@@ -1,11 +1,11 @@
 {
   "pipeline": [
     {
-      "module": "data_sentinel.modules.readers.RealTimeReader",
+      "module": "data_sentinel.modules.readers.realtime.RealTimeReader",
       "config": {"records": [4, 5, 6]}
     },
     {
-      "module": "data_sentinel.modules.dq.DataQualityModule",
+      "module": "data_sentinel.modules.ops.dq.DataQualityModule",
       "config": {},
       "enable_mlflow": true
     }
