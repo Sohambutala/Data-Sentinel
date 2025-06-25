@@ -1,0 +1,12 @@
+{
+  "pipeline": [
+    {
+      "module": "data_sentinel.modules.readers.RealTimeReader",
+      "config": {}
+    },
+    {
+      "module": "data_sentinel.modules.dq.DataQualityModule",
+      "config": {}
+    }
+  ]
+}
