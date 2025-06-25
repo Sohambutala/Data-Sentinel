@@ -6,8 +6,8 @@
     },
     {
       "module": "data_sentinel.modules.dq.DataQualityModule",
-      "config": {}
+      "config": {},
+      "enable_mlflow": true
     }
-  ],
-  "enable_mlflow": false
+  ]
 }

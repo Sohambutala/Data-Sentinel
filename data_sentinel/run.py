@@ -13,9 +13,7 @@ def main(argv: list[str] | None = None) -> None:
         raise SystemExit(1)
     config_file = Path(argv[0])
     cfg = load_config(config_file)
-    stages = cfg.get("pipeline", [])
-    mlflow_enabled = cfg.get("enable_mlflow", False)
-    orchestrator = Orchestrator(stages, use_mlflow=mlflow_enabled)
+    orchestrator = Orchestrator(cfg.pipeline)
     result = orchestrator.run()
     print(result)
 
