@@ -1,0 +1,7 @@
+{
+  "poll": {
+    "polling_path": "/host-files",
+    "poll_type": "FILE",
+    "max_workers": 3
+  }
+}

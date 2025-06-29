@@ -1,17 +1,12 @@
 from __future__ import annotations
-
 from pydantic import BaseModel, Field
-from typing import Any, Dict, List
+from typing import Literal
 
-class StageConfig(BaseModel):
-    """Configuration for a single pipeline stage."""
 
-    module: str
-    config: Dict[str, Any] = Field(default_factory=dict)
-    enable_mlflow: bool = False
-
+class PollConfig(BaseModel):
+    polling_path: str
+    poll_type: Literal["FILE"] = "FILE"  # enforce accepted types
+    max_workers: int = Field(gt=0, description="Maximum number of worker pods",default=1)
 
 class PipelineConfig(BaseModel):
-    """Root pipeline configuration."""
-
-    pipeline: List[StageConfig]
+    poll: PollConfig
